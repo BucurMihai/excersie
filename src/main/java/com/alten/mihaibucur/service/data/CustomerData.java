@@ -1,6 +1,8 @@
 package com.alten.mihaibucur.service.data;
 
-public class CustomerData {
+import java.io.Serializable;
+
+public class CustomerData implements Serializable {
     private Long id;
     private String update;
     private String name;

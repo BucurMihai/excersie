@@ -21,7 +21,7 @@ public class Customer {
     private String type;
     private Double balance;
 
-    @OneToMany(mappedBy="transaction")
+    @OneToMany
     private Set<Transaction> transactionSet;
 
 

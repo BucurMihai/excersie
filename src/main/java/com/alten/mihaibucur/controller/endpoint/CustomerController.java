@@ -1,11 +1,9 @@
-package com.alten.mihaibucur.controller.customer;
+package com.alten.mihaibucur.controller.endpoint;
 
 import com.alten.mihaibucur.controller.dto.CustomerDto;
 import com.alten.mihaibucur.controller.facade.interfaces.CustomerFacade;
-import com.alten.mihaibucur.service.interfaces.UpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 

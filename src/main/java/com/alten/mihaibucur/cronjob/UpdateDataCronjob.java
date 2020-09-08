@@ -17,7 +17,7 @@ public class UpdateDataCronjob {
     @Autowired
     UpdateService updateService;
 
-    @Scheduled(cron = "0 0 * * *")
+    @Scheduled(cron = "0 0 * * * *")
     public void reportCurrentTime() throws URISyntaxException {
         updateService.update();
     }
