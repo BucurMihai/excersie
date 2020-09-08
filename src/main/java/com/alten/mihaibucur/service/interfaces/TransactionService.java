@@ -1,5 +1,6 @@
 package com.alten.mihaibucur.service.interfaces;
 
+import com.alten.mihaibucur.controller.dto.TransactionDto;
 import com.alten.mihaibucur.model.entity.Transaction;
 import com.alten.mihaibucur.service.data.TransactionData;
 
@@ -13,4 +14,6 @@ public interface TransactionService {
     List<TransactionData> getTransactions(String jwtToken) throws URISyntaxException;
 
     Optional<Transaction> findById(Long id);
+
+    List<TransactionDto> getTransactions(int startPage, int endPage);
 }

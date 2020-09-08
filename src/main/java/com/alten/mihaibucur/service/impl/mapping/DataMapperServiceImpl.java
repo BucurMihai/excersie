@@ -1,6 +1,11 @@
 package com.alten.mihaibucur.service.impl.mapping;
 
+import com.alten.mihaibucur.controller.dto.AmountDto;
 import com.alten.mihaibucur.controller.dto.CustomerDto;
+import com.alten.mihaibucur.controller.dto.RateDto;
+import com.alten.mihaibucur.controller.dto.TransactionDto;
+import com.alten.mihaibucur.controller.dto.TransactionSourceDto;
+import com.alten.mihaibucur.model.entity.Amount;
 import com.alten.mihaibucur.model.entity.Customer;
 import com.alten.mihaibucur.model.entity.Rate;
 import com.alten.mihaibucur.model.entity.Transaction;
@@ -14,6 +19,7 @@ import com.alten.mihaibucur.service.interfaces.TransactionService;
 import com.alten.mihaibucur.service.interfaces.mapping.DataMapperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,6 +50,53 @@ public class DataMapperServiceImpl implements DataMapperService {
     @Override
     public List<Transaction> mapTransactions(List<TransactionData> transactionDataList) {
         return transactionDataList.stream().map(this::mapTransactionDataToEntity).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TransactionDto> mapTransactionPage(Page<Transaction> transactionPage) {
+        return transactionPage.stream().map(this::mapTransactionToDto).collect(Collectors.toList());
+    }
+
+    private TransactionDto mapTransactionToDto(Transaction transaction) {
+        TransactionDto transactionDto = new TransactionDto();
+        transactionDto.setStatus(transaction.getStatus());
+        transactionDto.setCurrency(transaction.getCurrency());
+        transactionDto.setAmount(transaction.getAmount());
+        transactionDto.setUpdate(transaction.getUpdate());
+        transactionDto.setDescription(transaction.getDescription());
+        transactionDto.setExchangeRate(mapExchangeRateToDto(transaction.getExchangeRate()));
+        transactionDto.setOriginalAmount(mapAmountToDto(transaction.getOriginalAmount()));
+        transactionDto.setCreditor(mapTransactionSourceToDto(transaction.getCreditor()));
+        return transactionDto;
+    }
+
+    private TransactionSourceDto mapTransactionSourceToDto(TransactionSource transactionSource) {
+        TransactionSourceDto transactionSourceDto = new TransactionSourceDto();
+        if(transactionSource != null){
+            transactionSourceDto.setMaskedPan(transactionSource.getMaskedPan());
+            transactionSourceDto.setName(transactionSource.getName());
+        }
+
+        return transactionSourceDto;
+    }
+
+    private AmountDto mapAmountToDto(Amount originalAmount) {
+        AmountDto amountDto = new AmountDto();
+        if(originalAmount != null){
+            amountDto.setAmount(originalAmount.getAmount());
+            amountDto.setCurrency(originalAmount.getCurrency());
+        }
+        return amountDto;
+    }
+
+    private RateDto mapExchangeRateToDto(Rate exchangeRate) {
+        RateDto rateDto = new RateDto();
+        if(exchangeRate != null){
+            rateDto.setCurrencyFrom(exchangeRate.getCurrencyFrom());
+            rateDto.setCurrencyTo(exchangeRate.getCurrencyTo());
+            rateDto.setRate(exchangeRate.getRate());
+        }
+        return rateDto;
     }
 
     private Transaction mapTransactionDataToEntity(TransactionData transactionData) {

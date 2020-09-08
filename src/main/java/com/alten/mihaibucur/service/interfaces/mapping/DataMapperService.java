@@ -1,6 +1,7 @@
 package com.alten.mihaibucur.service.interfaces.mapping;
 
 import com.alten.mihaibucur.controller.dto.CustomerDto;
+import com.alten.mihaibucur.controller.dto.TransactionDto;
 import com.alten.mihaibucur.model.entity.Customer;
 import com.alten.mihaibucur.model.entity.Transaction;
 import com.alten.mihaibucur.service.data.CustomerData;
@@ -16,4 +17,6 @@ public interface DataMapperService {
     List<CustomerDto> map(Page<Customer> customerPage);
 
     List<Transaction> mapTransactions(List<TransactionData> transactionDataList);
+
+    List<TransactionDto> mapTransactionPage(Page<Transaction> transactionPage);
 }
